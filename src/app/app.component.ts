@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { TodoItemsService } from './services/todoItems.service';
-import { TodoItem } from './shared/models';
+import { retrievedTodoItems } from './state/app.actions';
+import { selectTodoItems } from './state/app.selectors';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +10,15 @@ import { TodoItem } from './shared/models';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   
-  todoItems$: Observable<TodoItem[]>;
+  todoItems$ = this.store.pipe(select(selectTodoItems));
 
-  constructor(private todoItemsService: TodoItemsService) {
-    this.todoItems$ = todoItemsService.getTodoItems();
+  constructor(private store: Store, private todoItemsService: TodoItemsService) { }
+
+  ngOnInit() {
+    this.todoItemsService.getTodoItems().subscribe(res => {
+      this.store.dispatch(retrievedTodoItems({ todoItems: res }));
+    });
   }
 }

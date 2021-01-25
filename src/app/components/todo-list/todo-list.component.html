@@ -1,4 +1,4 @@
 <mat-accordion *ngIf="todoItems?.length; else noData">
-    <app-todo-item *ngFor="let todoItem of todoItems; trackBy: trackByFn" [todoItem]="todoItem"></app-todo-item>
+    <app-todo-item *ngFor="let todoItem of todoItems; trackBy: trackByFn" [todoItem]="todoItem" (toggle)="onToggle(todoItem)"></app-todo-item>
 </mat-accordion>
 <ng-template #noData>No data</ng-template>
