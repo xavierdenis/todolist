@@ -7,11 +7,16 @@
         <mat-panel-description>
             <ng-container *ngIf="todoItem?.description; else noDescription">{{ todoItem.description }}</ng-container>
             <ng-template #noDescription i18n>No description</ng-template>
-            <button [disabled]="readonly" mat-icon-button [ngSwitch]="todoItem?.done" (click)="onClick($event)">
-                <mat-icon *ngSwitchCase=true>done</mat-icon>
-                <mat-icon *ngSwitchDefault>check_box_outline_blank</mat-icon>
-            </button>
+            <div (click)="$event.stopPropagation()"> <!-- Prevent mat-expansion-panel from expanding -->
+                <button [disabled]="readonly" mat-icon-button [ngSwitch]="todoItem?.done" (click)="onToggleDone(todoItem.id)">
+                    <mat-icon *ngSwitchCase=true>done</mat-icon>
+                    <mat-icon *ngSwitchDefault>check_box_outline_blank</mat-icon>
+                </button>
+                <button [disabled]="readonly" mat-icon-button (click)="onDelete(todoItem.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
         </mat-panel-description>
     </mat-expansion-panel-header>
-    <app-todo-item-form readonly=true [todoItem]="todoItem" (submit)="onSubmit($event)"></app-todo-item-form>
+    <app-todo-item-form readonly=true [todoItem]="todoItem"></app-todo-item-form>
 </mat-expansion-panel>

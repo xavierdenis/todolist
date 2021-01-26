@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TodoItem as TodoItem } from 'src/app/shared/models';
-import { toggleTodoItem } from 'src/app/state/app.actions';
+import { deleteTodoItem, toggleTodoItem } from 'src/app/state/app.actions';
 
 @Component({
   selector: 'app-todo-item',
@@ -22,15 +22,15 @@ export class TodoItemComponent {
 
   constructor(private store: Store) { }
 
-  onClick(event: MouseEvent) {
-    event.stopPropagation(); // Prevent mat-expansion-panel from expanding
+  onToggleDone(id: string) {
     if (this.todoItem) {
-      this.store.dispatch(toggleTodoItem({ id: this.todoItem.id }));
+      this.store.dispatch(toggleTodoItem({ id }));
     }
   }
 
-  onSubmit(event: TodoItem) {
-    console.log("onSubmit", event);
-    this.submit.emit(event);
+  onDelete(id: string) {
+    if (this.todoItem) {
+      this.store.dispatch(deleteTodoItem({ id }));
+    }
   }
 }

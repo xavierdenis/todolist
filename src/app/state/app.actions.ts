@@ -11,6 +11,16 @@ export const toggleTodoItemSuccess = createAction(
   props<{ id: string, done: boolean }>()
 );
 
+export const deleteTodoItem = createAction(
+  '[TodoItemList] Delete TodoItem',
+  props<{ id: string }>()
+);
+
+export const deleteTodoItemSuccess = createAction(
+  '[TodoItemList] Delete TodoItem Success',
+  props<{ id: string }>()
+);
+
 export const loadTodoItems = createAction(
   '[TodoItemsService] Load TodoItems'
 );

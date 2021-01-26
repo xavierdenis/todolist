@@ -31,6 +31,10 @@ export class TodoItemsService {
     return defer(() => of(this._addTodoItem(todoItem)));
   }
 
+  deleteTodoItem(id: string): Observable<void> {
+    return defer(() => of(this._deleteTodoItem(id)));
+  }
+
   toggleTodoItem(id: string): Observable<boolean> {
     return defer(() => of(this._toggleTodoItem(id)));
   } 
@@ -77,6 +81,15 @@ export class TodoItemsService {
     todoItems.push({ ...todoItem, id });
     this._saveTodoItemsFromLocalStorage(todoItems);
     return id;
+  }
+
+  private _deleteTodoItem(id: string): void {
+    const todoItems = this._getTodoItemsFromLocalStorage();
+    const newTodoItems = todoItems.filter(todoItem => todoItem.id !== id);
+    if (todoItems.length === newTodoItems.length) {
+      throw new Error("TodoItem not found: " + id);
+    }
+    this._saveTodoItemsFromLocalStorage(newTodoItems);
   }
 
   private _toggleTodoItem(id: string): boolean {
