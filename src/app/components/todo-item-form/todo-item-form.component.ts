@@ -25,5 +25,10 @@ export class TodoItemFormComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.form.patchValue(this.todoItem || {});
+    if (this.readonly) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
   }
 }

@@ -13,5 +13,5 @@
             </button>
         </mat-panel-description>
     </mat-expansion-panel-header>
-    <app-todo-item-form [readonly]="readonly" [todoItem]="todoItem" (submit)="onSubmit($event)"></app-todo-item-form>
+    <app-todo-item-form readonly=true [todoItem]="todoItem" (submit)="onSubmit($event)"></app-todo-item-form>
 </mat-expansion-panel>
