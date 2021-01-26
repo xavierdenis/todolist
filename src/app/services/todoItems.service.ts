@@ -11,16 +11,16 @@ export class TodoItemsService {
 
   private static readonly LOCAL_STORAGE_TODOS_KEY = "todos";
 
-  private static readonly DEMO_DATA = [
-    { id: "1", title: "TODO #1" },
-    { id: "2", title: "TODO #2" },
-    { id: "3", title: "TODO #3" },
-    { id: "4", title: "TODO #4", description: "TODO #4 DESC"},
-    { id: "5", title: "TODO #5", description: "DONE by angular", done: true },
-  ] as TodoItem[];
+  // private static readonly DEMO_DATA = [
+  //   { id: "1", title: "TODO #1" },
+  //   { id: "2", title: "TODO #2" },
+  //   { id: "3", title: "TODO #3" },
+  //   { id: "4", title: "TODO #4", description: "TODO #4 DESC"},
+  //   { id: "5", title: "TODO #5", description: "DONE by angular", done: true },
+  // ] as TodoItem[];
   
-  constructor() { 
-    localStorage.setItem(TodoItemsService.LOCAL_STORAGE_TODOS_KEY, JSON.stringify(TodoItemsService.DEMO_DATA)); // Use static data for now
+  constructor() {
+    // localStorage.setItem(TodoItemsService.LOCAL_STORAGE_TODOS_KEY, JSON.stringify(TodoItemsService.DEMO_DATA)); // Use static data for now
   }
 
   getTodoItem(id: string): Observable<TodoItem> {
@@ -72,11 +72,11 @@ export class TodoItemsService {
     if (!todoItem) {
       throw new Error("Specify a valid todoItem");
     }
-    todoItem.id = uuidv4();
     const todoItems = this._getTodoItemsFromLocalStorage();
-    todoItems.push(todoItem);
+    const id = uuidv4();
+    todoItems.push({ ...todoItem, id });
     this._saveTodoItemsFromLocalStorage(todoItems);
-    return todoItem.id;
+    return id;
   }
 
   private _toggleTodoItem(id: string): boolean {

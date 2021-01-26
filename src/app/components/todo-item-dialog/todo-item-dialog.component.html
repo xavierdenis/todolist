@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>
+    <ng-container *ngIf="todoItem?.id; else new" i18n>Update Todo</ng-container>
+    <ng-template #new i18n>New Todo</ng-template>
+</h1>
+<div mat-dialog-content>
+    <app-todo-item-form #todoItemForm [todoItem]="todoItem"></app-todo-item-form>
+</div>
+<mat-dialog-actions>
+    <button [disabled]="!todoItemForm.form.valid" mat-button [mat-dialog-close]="todoItemForm.form.value" i18n>Ok</button>
+    <button mat-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>

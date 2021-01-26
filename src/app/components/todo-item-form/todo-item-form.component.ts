@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { TodoItem } from 'src/app/shared/models';
 
 @Component({
@@ -7,7 +7,7 @@ import { TodoItem } from 'src/app/shared/models';
   templateUrl: './todo-item-form.component.html',
   styleUrls: ['./todo-item-form.component.scss']
 })
-export class TodoItemFormComponent implements OnInit {
+export class TodoItemFormComponent implements OnChanges {
 
   @Input()
   todoItem: TodoItem;
@@ -15,26 +15,15 @@ export class TodoItemFormComponent implements OnInit {
   @Input()
   readonly: boolean;
 
-  @Output()
-  submit = new EventEmitter<TodoItem>();
-  
-  form: FormGroup;
+  form = this.formBuilder.group({
+    title: this.formBuilder.control('', Validators.required),
+    description: this.formBuilder.control(''),
+    done: this.formBuilder.control('')
+  });
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private cdr: ChangeDetectorRef) { }
 
-  ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      title: this.formBuilder.control(this.todoItem?.title, Validators.required),
-      description: this.formBuilder.control(this.todoItem?.description),
-      done: this.formBuilder.control(this.todoItem?.done)
-    });
-    if (this.readonly) {
-      this.form.disable();
-    }
-  }
-
-  onSubmit(): void {
-    console.log("onSubmit", this.form.value);
-    this.submit.emit(this.form.value);
+  ngOnChanges(changes: SimpleChanges) {
+    this.form.patchValue(this.todoItem || {});
   }
 }
