@@ -1,0 +1,4 @@
+<ng-container *ngIf="(todoItem$ | async) as todoItem; else loading">
+    <app-todo-item readonly=true [todoItem]="todoItem"></app-todo-item>
+</ng-container>
+<ng-template #loading>Loading</ng-template>

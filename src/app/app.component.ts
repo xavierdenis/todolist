@@ -1,7 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { loadTodoItems } from './state/app.actions';
-import { selectTodoItems } from './state/app.selectors';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -9,13 +6,4 @@ import { selectTodoItems } from './state/app.selectors';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit {
-  
-  todoItems$ = this.store.pipe(select(selectTodoItems));
-
-  constructor(private store: Store) { }
-
-  ngOnInit() {
-    this.store.dispatch(loadTodoItems());
-  }
-}
+export class AppComponent { }

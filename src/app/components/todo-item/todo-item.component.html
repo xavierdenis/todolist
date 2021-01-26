@@ -1,5 +1,5 @@
 <mat-expansion-panel hideToggle=true [class.done]="todoItem?.done">
-    <mat-expansion-panel-header #header (click)="header._toggle()"> <!-- Dont toggle for now, future use -->
+    <mat-expansion-panel-header>
         <mat-panel-title>
             <ng-container *ngIf="todoItem?.title; else noTitle">{{ todoItem.title }}</ng-container>
             <ng-template #noTitle i18n>No title</ng-template>
@@ -7,11 +7,11 @@
         <mat-panel-description>
             <ng-container *ngIf="todoItem?.description; else noDescription">{{ todoItem.description }}</ng-container>
             <ng-template #noDescription i18n>No description</ng-template>
-
-            <button mat-icon-button [ngSwitch]="todoItem?.done" (click)="onClick($event)">
+            <button [disabled]="readonly" mat-icon-button [ngSwitch]="todoItem?.done" (click)="onClick($event)">
                 <mat-icon *ngSwitchCase=true>done</mat-icon>
                 <mat-icon *ngSwitchDefault>check_box_outline_blank</mat-icon>
             </button>
         </mat-panel-description>
     </mat-expansion-panel-header>
+    <app-todo-item-form [readonly]="readonly" [todoItem]="todoItem" (submit)="onSubmit($event)"></app-todo-item-form>
 </mat-expansion-panel>

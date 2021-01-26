@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { defer, Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { TodoItem } from '../shared/models';
 import { v4 as uuidv4 } from 'uuid';
+import { TodoItem } from '../shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,10 @@ export class TodoItemsService {
     localStorage.setItem(TodoItemsService.LOCAL_STORAGE_TODOS_KEY, JSON.stringify(TodoItemsService.DEMO_DATA)); // Use static data for now
   }
 
+  getTodoItem(id: string): Observable<TodoItem> {
+    return defer(() => of(this._getTodoItem(id)));
+  }
+  
   addTodoItem(todoItem: TodoItem): Observable<string> {
     return defer(() => of(this._addTodoItem(todoItem)));
   }
@@ -54,6 +58,16 @@ export class TodoItemsService {
     }
   }
 
+  private _getTodoItem(id: string): TodoItem {
+    const todoItems = this._getTodoItemsFromLocalStorage();
+    for (let todoItem of todoItems) {
+      if (todoItem.id === id) {
+        return todoItem;
+      }
+    }
+    throw new Error("TodoItem not found: " + id);
+  }
+  
   private _addTodoItem(todoItem: TodoItem): string {
     if (!todoItem) {
       throw new Error("Specify a valid todoItem");

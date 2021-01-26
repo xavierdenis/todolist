@@ -12,10 +12,20 @@ export const toggleTodoItemSuccess = createAction(
 );
 
 export const loadTodoItems = createAction(
-  '[TodoItemsService] Load Todo Items'
+  '[TodoItemsService] Load TodoItems'
 );
 
 export const loadTodoItemsSuccess = createAction(
-  '[TodoItemsService] Load Todo Items Success',
+  '[TodoItemsService] Load TodoItems Success',
   props<{ todoItems: TodoItem[] }>()
+);
+
+export const newTodoItem = createAction(
+  '[TodoItemForm] New TodoItem',
+  props<{ todoItem: TodoItem }>()
+);
+
+export const newTodoItemSuccess = createAction(
+  '[TodoItemForm] New TodoItem Success',
+  props<{ todoItem: TodoItem }>()
 );

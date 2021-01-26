@@ -1,4 +1,1 @@
-<ng-container *ngIf="(todoItems$ | async) as todoItems; else loading">
-    <app-todo-list [todoItems]="todoItems"></app-todo-list>
-</ng-container>
-<ng-template #loading>Loading</ng-template>
+<router-outlet></router-outlet>
