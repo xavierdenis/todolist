@@ -1,4 +1,4 @@
-<mat-expansion-panel hideToggle=true [class.done]="todoItem?.done">
+<mat-expansion-panel #matExpansionPanel [class.done]="todoItem?.done">
     <mat-expansion-panel-header>
         <mat-panel-title>
             <ng-container *ngIf="todoItem?.title; else noTitle">{{ todoItem.title }}</ng-container>
@@ -14,6 +14,9 @@
                 </button>
                 <button [disabled]="readonly" mat-icon-button (click)="onDelete(todoItem.id)">
                     <mat-icon>delete</mat-icon>
+                </button>
+                <button *ngIf="matExpansionPanel.expanded" [disabled]="readonly" mat-icon-button (click)="onView(todoItem.id)">
+                    <mat-icon>open_in_browser</mat-icon>
                 </button>
             </div>
         </mat-panel-description>

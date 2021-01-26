@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TodoItem as TodoItem } from 'src/app/shared/models';
 import { deleteTodoItem, toggleTodoItem } from 'src/app/state/app.actions';
@@ -20,7 +21,7 @@ export class TodoItemComponent {
   @Output()
   submit = new EventEmitter<TodoItem>();
 
-  constructor(private store: Store) { }
+  constructor(private store: Store, private router: Router) { }
 
   onToggleDone(id: string) {
     if (this.todoItem) {
@@ -32,5 +33,9 @@ export class TodoItemComponent {
     if (this.todoItem) {
       this.store.dispatch(deleteTodoItem({ id }));
     }
+  }
+
+  onView(id: string) {
+    this.router.navigate([id]);
   }
 }
